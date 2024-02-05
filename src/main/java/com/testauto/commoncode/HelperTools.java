@@ -5,7 +5,8 @@ import java.util.concurrent.TimeUnit;
 public class HelperTools {
 
     /**
-     * Verbose sleep with loop of text
+     * This is a convenience method to aid visually inspecting how the test is proceeding.
+     * WARNING: Excessive usage can slow down a test's runtime.
      */
     public static void mySleep(int sleepTimeInSecs, String text) throws InterruptedException {
 

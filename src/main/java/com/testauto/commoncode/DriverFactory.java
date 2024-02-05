@@ -14,4 +14,6 @@ public class DriverFactory {
 
         return driver;
     }
+
+    // In the future this would contain drivers for different browsers
 }

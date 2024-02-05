@@ -30,7 +30,7 @@ public class InputDateTest extends BaseTestClass{
 
         String testUrl = "https://demo.automationtesting.in/Datepicker.html";
         String webpageTitle = "Datepicker";
-        int sleepTimeInSecs = 1;
+        int sleepTimeInSecs = 2;
 
         driver.get(testUrl);
 
@@ -62,8 +62,7 @@ public class InputDateTest extends BaseTestClass{
          * Good example how to use "contains" in an xpath
          * */
         WebElement datePickYear = driver.findElement(By.xpath(
-                "//select[@title='Change the year']/option[contains(@value,"
-                        + targetYear + ")]"));
+                "//select[@title='Change the year']/option[contains(@value," + targetYear + ")]"));
         datePickYear.click();
 
         HelperTools.mySleep(sleepTimeInSecs, "Should now have " + targetYear + " selected.");
@@ -83,23 +82,21 @@ public class InputDateTest extends BaseTestClass{
          *
          * */
         WebElement datePickMonth = driver.findElement(By.xpath(
-                "//select[@title='Change the month']/option[@value='"
-                        + targetMonth + "/" + targetYear + "']"));
+                "//select[@title='Change the month']/option[@value='" + targetMonth + "/"
+                        + targetYear + "']"));
         datePickMonth.click();
 
-        HelperTools.mySleep(sleepTimeInSecs, "Should now have " + targetMonth +"/"
-                + targetYear + " selected.");
+        HelperTools.mySleep(sleepTimeInSecs, "Should now have " + targetMonth +"/" + targetYear + " selected.");
 
         /*
          * Select the target test day.
          *
          * */
-        WebElement datePickDay = driver.findElement(By.xpath(
-                "//a[@title='" + targetDateString + "']"));
+        WebElement datePickDay = driver.findElement(By.xpath("//a[@title='" + targetDateString + "']"));
         datePickDay.click();
 
-        HelperTools.mySleep(sleepTimeInSecs, "Should now have " + targetDay+ "/"
-                + targetMonth + "/" + targetYear + " selected.");
+        HelperTools.mySleep(sleepTimeInSecs, "Should now have " + targetDay+ "/" + targetMonth + "/"
+                 + targetYear + " selected.");
 
         String finalDateTest = dateInputBox.getAttribute("value");
 

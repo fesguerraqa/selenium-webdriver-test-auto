@@ -7,6 +7,10 @@ import java.time.Duration;
 
 public class DriverFactory {
 
+    /**
+     * Returns a ChromeDriver WebDriver
+     * @return WebDriver
+     */
     public static WebDriver getChromeDriver() {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();

@@ -17,6 +17,7 @@ public class RetrieveSearchSuggestionsTest extends BaseTestClass{
      *  input.
      *  - The test captures all the Recommended Searches. Test then goes through the results and verifies a target
      *  string that is expected to be Recommended Searches by google.
+     * @throws InterruptedException Interrupted Exception
      */
     @Test
     void retrieveAjaxSearchSuggestions() throws InterruptedException {
@@ -42,21 +43,23 @@ public class RetrieveSearchSuggestionsTest extends BaseTestClass{
         WebElement recommendedSearches = driver.findElement(By.xpath(HelperTools.googleRecommendedSearchesXPathStr));
         List<WebElement> searchRows = recommendedSearches.findElements(By.tagName("li"));
 
-        boolean containsLuminor = false;
+        boolean containsExpectedRecStr = false;
+
+        HelperTools.quickPrint("All Strings: " + recommendedSearches.getText());
 
         for (WebElement we : searchRows) {
 
-            HelperTools.mySleep(3,"Retrieved: " + we.getText());
+            HelperTools.mySleep(3,"Retrieved from list: " + we.getText());
 
             if (we.getText().contains(expectedSugggestedString)){
-                containsLuminor = true;
+                containsExpectedRecStr = true;
                 break;
             }
         }
 
-        Assert.assertTrue(containsLuminor, "Did not find expected suggestion of string: "
+        Assert.assertTrue(containsExpectedRecStr, "Did not find expected suggestion of string: "
                 + expectedSugggestedString + ".");
 
-        HelperTools.mySleep(10,"End of the test");
+        HelperTools.mySleep(5,"End of the test");
     }
 }

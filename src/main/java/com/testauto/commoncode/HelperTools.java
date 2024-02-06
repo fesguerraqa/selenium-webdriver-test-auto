@@ -24,6 +24,9 @@ public class HelperTools {
     /**
      * This is a convenience method to aid visually inspecting how the test is proceeding.
      * WARNING: Excessive usage can slow down a test's runtime.
+     * @param sleepTimeInSecs Time to sleep in seconds.
+     * @param text Target string to be printed in the console.
+     * @throws InterruptedException Interrupted Exception
      */
     public static void mySleep(int sleepTimeInSecs, String text) throws InterruptedException {
 
@@ -36,17 +39,30 @@ public class HelperTools {
     }
 
     /**
-    * Calls mySleep and uses 3 seconds as sleeptime.
-    * */
+     * Calls mySleep and uses 3 seconds as sleep time.
+     * @param text Target string to be printed
+     * @throws InterruptedException Interrupted Exception
+     */
     public static void my3SecSleep(String text) throws InterruptedException {
         mySleep(3, text);
     }
 
     /**
      * Waits in seconds for target element to be present.
+     * @param myDriver WebDriver under test
+     * @param seconds amount of wait time in seconds
+     * @param by By object.
      */
     public static void waitForPresence(WebDriver myDriver, int seconds, By by){
         WebDriverWait wait = new WebDriverWait(myDriver, Duration.ofSeconds(seconds));
         wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
+    /**
+     * Quick command to print text on console.
+     * @param s string to be printed on console.
+     */
+    public static void quickPrint(String s) {
+        System.out.println(s);
     }
 }

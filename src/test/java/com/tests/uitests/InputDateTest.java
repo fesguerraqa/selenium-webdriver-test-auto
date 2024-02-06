@@ -1,6 +1,5 @@
 package com.tests.uitests;
 
-
 import com.testauto.commoncode.HelperTools;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -13,8 +12,8 @@ public class InputDateTest extends BaseTestClass{
      *  This test verifies that we can select a target date from a calendar.
      *  Verifies:
      *   - Target webpage has correct target Title.
+     *   - User be able to navigate on a Calendar Pop-up
      *   - Target input box will have correct target Date.
-     *
      * */
     @Test
     void inputDateTest() throws InterruptedException {

@@ -53,7 +53,8 @@ public class RetrieveSearchSuggestionsTest extends BaseTestClass{
 
             if (we.getText().contains(expectedSugggestedString)){
                 containsExpectedRecStr = true;
-                break;
+                HelperTools.quickPrint("Found: " + expectedSugggestedString + " in " + "'" + we.getText() + "'");
+                break; // As long as we find a match we don't care for the other captures.
             }
         }
 

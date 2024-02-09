@@ -1,12 +1,13 @@
 package com.tests.uitests;
 
-import com.testauto.commoncode.HelperTools;
+import base.BaseTestClass;
+import helper.HelperTools;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class InputDateTest extends BaseTestClass{
+public class InputDateTest extends BaseTestClass {
 
     /*
      *  This test verifies that we can select a target date from a calendar.
@@ -29,7 +30,7 @@ public class InputDateTest extends BaseTestClass{
 
         String testUrl = "https://demo.automationtesting.in/Datepicker.html";
         String webpageTitle = "Datepicker";
-        int sleepTimeInSecs = 2;
+        int sleepTimeInSecs = 3;
 
         driver.get(testUrl);
 

@@ -1,6 +1,7 @@
 package com.tests.uitests;
 
-import com.testauto.commoncode.HelperTools;
+import base.BaseTestClass;
+import helper.HelperTools;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -8,7 +9,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-public class RetrieveSearchSuggestionsTest extends BaseTestClass{
+public class RetrieveSearchSuggestionsTest extends BaseTestClass {
 
     /**
      * This test verifies that a user can put a search string in google and a target string will be displayed
@@ -23,7 +24,7 @@ public class RetrieveSearchSuggestionsTest extends BaseTestClass{
     void retrieveAjaxSearchSuggestions() throws InterruptedException {
 
         /*
-         * In my imagination, maybe Panarai wants google to suggest "Luminor" when a user searches for Panerai.
+         * In my imagination, maybe Panerai wants google to suggest "Luminor" when a user searches for Panerai.
          **/
         String expectedStrSearch = "Panerai";
         String expectedSugggestedString = "Luminor";
@@ -43,7 +44,7 @@ public class RetrieveSearchSuggestionsTest extends BaseTestClass{
         WebElement recommendedSearches = driver.findElement(By.xpath(HelperTools.googleRecommendedSearchesXPathStr));
         List<WebElement> searchRows = recommendedSearches.findElements(By.tagName("li"));
 
-        boolean containsExpectedRecStr = false;
+        boolean foundExpectedRecStr = false;
 
         HelperTools.quickPrint("All Strings: " + recommendedSearches.getText());
 
@@ -52,13 +53,13 @@ public class RetrieveSearchSuggestionsTest extends BaseTestClass{
             HelperTools.mySleep(3,"Retrieved from list: " + we.getText());
 
             if (we.getText().contains(expectedSugggestedString)){
-                containsExpectedRecStr = true;
+                foundExpectedRecStr = true;
                 HelperTools.quickPrint("Found: " + expectedSugggestedString + " in " + "'" + we.getText() + "'");
                 break; // As long as we find a match we don't care for the other captures.
             }
         }
 
-        Assert.assertTrue(containsExpectedRecStr, "Did not find expected suggestion of string: "
+        Assert.assertTrue(foundExpectedRecStr, "Did not find expected suggestion of string: "
                 + expectedSugggestedString + ".");
 
         HelperTools.mySleep(5,"End of the test");

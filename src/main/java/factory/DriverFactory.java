@@ -1,4 +1,4 @@
-package com.testauto.commoncode;
+package factory;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

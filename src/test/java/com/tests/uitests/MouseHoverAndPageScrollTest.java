@@ -1,6 +1,7 @@
 package com.tests.uitests;
 
-import com.testauto.commoncode.HelperTools;
+import base.BaseTestClass;
+import helper.HelperTools;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -8,10 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.List;
-
 public class MouseHoverAndPageScrollTest extends BaseTestClass{
-
 
     /**
      * This test verifies that hovering over a menu displays a new popup with other links. This also verifies that
@@ -41,7 +39,7 @@ public class MouseHoverAndPageScrollTest extends BaseTestClass{
 
         String solXPath = "//*[@id='menu-item-1599']/ul";
         WebElement solSubMenu = driver.findElement(By.xpath(solXPath));
-        List<WebElement> subMenu = solSubMenu.findElements(By.tagName("li"));
+        //List<WebElement> subMenu = solSubMenu.findElements(By.tagName("li"));
 
         // Verify that both sub menus were present.
         Assert.assertTrue(solSubMenu.getText().contains(halo), "Expecting Visible Link: " + halo + ".");

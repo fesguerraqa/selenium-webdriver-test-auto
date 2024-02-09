@@ -1,12 +1,12 @@
 package com.tests.uitests;
 
-import com.testauto.commoncode.HelperTools;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import base.BaseTestClass;
+import helper.HelperTools;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.DatepickerPage;
 
-public class InputDateTest extends BaseTestClass{
+public class InputDateTest extends BaseTestClass {
 
     /*
      *  This test verifies that we can select a target date from a calendar.
@@ -18,87 +18,62 @@ public class InputDateTest extends BaseTestClass{
     @Test
     void inputDateTest() throws InterruptedException {
 
-        /*
-         * We will use a fixed target test date for simplicity.
-         * NEED to change targetDateString if any of the target year, month or day were changed.
-         * */
-        int targetYear = 2021;
+        int targetYear = 2026;
         int targetMonth = 11;
-        int targetDay = 18;
-        String targetDateString = "Select Thursday, Nov 18, 2021";
+        int targetDay = 28;
 
-        String testUrl = "https://demo.automationtesting.in/Datepicker.html";
         String webpageTitle = "Datepicker";
         int sleepTimeInSecs = 2;
 
-        driver.get(testUrl);
+        DatepickerPage datepicker = DatepickerPage.getDatepickerPage(driver);
+        datepicker.goToDatepickerPage();
 
         HelperTools.mySleep(sleepTimeInSecs,"Visual Inspection of Loaded Page.");
 
-        Assert.assertEquals(driver.getTitle(), webpageTitle);
+        // Verify here that page title is expected.
+        Assert.assertEquals(datepicker.getPageTitle(), webpageTitle);
 
-        /*
-         * Expose the calendar pop-up
-         *
-         * */
-        WebElement dateInputBox = driver.findElement(By.xpath("//*[@id='datepicker2']"));
-        dateInputBox.click();
-
+        datepicker.startDateInput();
         HelperTools.mySleep(sleepTimeInSecs,"Exposing Calendar Pop-up");
 
-        /*
-         * Expose the list of years that can be selected.
-         *
-         * */
-        WebElement datePopupYearSelection = driver.findElement(By.xpath(
-                "//select[@title='Change the year']"));
-        datePopupYearSelection.click();
+        // NOTE: There is some dependency with the sequence of picking the year, month and day in sequence.
+        // Maybe its more ideal to have all three values be fed in one method.
+        datepicker.pickYear(targetYear);
+        HelperTools.mySleep(sleepTimeInSecs,"Selecting Year: " + targetYear + ".");
 
-        HelperTools.mySleep(sleepTimeInSecs,"Before Selecting Year: " + targetYear + ".");
-
-        /*
-         * Select the target test year.
-         * Good example how to use "contains" in an xpath
-         * */
-        WebElement datePickYear = driver.findElement(By.xpath(
-                "//select[@title='Change the year']/option[contains(@value," + targetYear + ")]"));
-        datePickYear.click();
-
-        HelperTools.mySleep(sleepTimeInSecs, "Should now have " + targetYear + " selected.");
-
-        /*
-         * Expose target test months.
-         *
-         * */
-        WebElement datePopupMonths = driver.findElement(By.xpath(
-                "//select[@title='Change the month']"));
-        datePopupMonths.click();
-
-        HelperTools.mySleep(sleepTimeInSecs, "Exposing the months selectable");
-
-        /*
-         * Select the target test month.
-         *
-         * */
-        WebElement datePickMonth = driver.findElement(By.xpath(
-                "//select[@title='Change the month']/option[@value='" + targetMonth + "/"
-                        + targetYear + "']"));
-        datePickMonth.click();
-
+        datepicker.pickMonth(targetMonth);
         HelperTools.mySleep(sleepTimeInSecs, "Should now have " + targetMonth +"/" + targetYear + " selected.");
 
-        /*
-         * Select the target test day.
-         *
-         * */
-        WebElement datePickDay = driver.findElement(By.xpath("//a[@title='" + targetDateString + "']"));
-        datePickDay.click();
-
-        HelperTools.mySleep(sleepTimeInSecs, "Should now have " + targetDay+ "/" + targetMonth + "/"
+        datepicker.pickDay(targetDay);
+        HelperTools.mySleep(sleepTimeInSecs, "Should now have " + targetMonth+ "/" + targetDay + "/"
                  + targetYear + " selected.");
 
-        String finalDateTest = dateInputBox.getAttribute("value");
+        String finalDateTest = datepicker.getFinalDate();
 
-        Assert.assertEquals(targetMonth + "/" + targetDay + "/" + targetYear, finalDateTest);
+        // Verify that the correct target date is displayed.
+        Assert.assertEquals(finalDateTest, formatDate(targetYear, targetMonth, targetDay));
+    }
+
+    /**
+     * Simple method to address verification of "09" vs "9". The Webpage displays single digit numbers with a "0"
+     * in front.
+     * @param year
+     * @param month
+     * @param day
+     * @return
+     */
+    private String formatDate(int year, int month, int day){
+
+        String finalMonth = String.valueOf(month);
+        String finalDay = String.valueOf(day);
+
+        if (month < 10){
+            finalMonth = "0"+month;
+        }
+        if (day < 10){
+            finalDay = "0"+day;
+        }
+
+        return finalMonth + "/" + finalDay +"/" + year;
     }
 }

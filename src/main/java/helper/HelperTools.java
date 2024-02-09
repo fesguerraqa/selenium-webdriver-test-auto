@@ -1,4 +1,4 @@
-package com.testauto.commoncode;
+package helper;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -11,17 +11,6 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class HelperTools {
-
-    /**
-     * Putting the google input box here since I foresee there will be a lot of text examples
-     * that would want to use the google search engine.
-     */
-    public static final String googleInputBoxXPathStr = "//textarea[@id='APjFqb']";
-    /**
-     * XPath string for the list of Recommended Searches when a user inputs a string into
-     * the google input box.
-     */
-    public static final String googleRecommendedSearchesXPathStr = "//*[@id='Alh6id']//ul[@role='listbox']";
 
     /**
      * This is a convenience method to aid visually inspecting how the test is proceeding.

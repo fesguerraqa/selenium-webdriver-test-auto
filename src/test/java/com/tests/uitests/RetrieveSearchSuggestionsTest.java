@@ -1,14 +1,15 @@
 package com.tests.uitests;
 
-import com.testauto.commoncode.HelperTools;
-import org.openqa.selenium.By;
+import base.BaseTestClass;
+import helper.HelperTools;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.GooglePage;
 
 import java.util.List;
 
-public class RetrieveSearchSuggestionsTest extends BaseTestClass{
+public class RetrieveSearchSuggestionsTest extends BaseTestClass {
 
     /**
      * This test verifies that a user can put a search string in google and a target string will be displayed
@@ -23,42 +24,39 @@ public class RetrieveSearchSuggestionsTest extends BaseTestClass{
     void retrieveAjaxSearchSuggestions() throws InterruptedException {
 
         /*
-         * In my imagination, maybe Panarai wants google to suggest "Luminor" when a user searches for Panerai.
+         * In my imagination, maybe Panerai wants google to suggest "Luminor" when a user searches for Panerai.
          **/
         String expectedStrSearch = "Panerai";
         String expectedSugggestedString = "Luminor";
 
-        driver.get("https://www.google.com");
+        GooglePage googlePage = GooglePage.getGooglePage(driver);
+        googlePage.goToGoogle();
 
-        WebElement googleInputBox = driver.findElement(By.xpath(HelperTools.googleInputBoxXPathStr));
-        googleInputBox.sendKeys(expectedStrSearch);
+        // WebElement is still given to the user to be able to manipulate.
+        WebElement inputBox = googlePage.getInputBox();
+        inputBox.sendKeys(expectedStrSearch);
 
-        HelperTools.my3SecSleep("Searched for " + expectedStrSearch);
+        HelperTools.my3SecSleep("Searched for :" + expectedStrSearch);
 
-        String actualSearchString = googleInputBox.getAttribute("value");
+        String actualSearchString = inputBox.getAttribute("value");
         Assert.assertEquals(actualSearchString, expectedStrSearch);
 
-        HelperTools.waitForPresence(driver, 10, By.xpath(HelperTools.googleRecommendedSearchesXPathStr));
+        List<WebElement> searchRows = googlePage.getRecommendedSearchStrings();
 
-        WebElement recommendedSearches = driver.findElement(By.xpath(HelperTools.googleRecommendedSearchesXPathStr));
-        List<WebElement> searchRows = recommendedSearches.findElements(By.tagName("li"));
-
-        boolean containsExpectedRecStr = false;
-
-        HelperTools.quickPrint("All Strings: " + recommendedSearches.getText());
+        boolean foundExpectedRecStr = false;
 
         for (WebElement we : searchRows) {
 
             HelperTools.mySleep(3,"Retrieved from list: " + we.getText());
 
             if (we.getText().contains(expectedSugggestedString)){
-                containsExpectedRecStr = true;
+                foundExpectedRecStr = true;
                 HelperTools.quickPrint("Found: " + expectedSugggestedString + " in " + "'" + we.getText() + "'");
                 break; // As long as we find a match we don't care for the other captures.
             }
         }
 
-        Assert.assertTrue(containsExpectedRecStr, "Did not find expected suggestion of string: "
+        Assert.assertTrue(foundExpectedRecStr, "Did not find expected suggestion of string: "
                 + expectedSugggestedString + ".");
 
         HelperTools.mySleep(5,"End of the test");
